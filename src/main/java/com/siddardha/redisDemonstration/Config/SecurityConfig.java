@@ -37,7 +37,10 @@ public class SecurityConfig {
                         auth.requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/api/users/register", "/api/users/login").permitAll()
                                 .anyRequest().authenticated())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+               /* for basic auth */
+                //.httpBasic(Customizer.withDefaults())
+                 /* for JWT  */
+               . addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 /* for stateless server */
                  .sessionManagement(sm-> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(headers -> headers
