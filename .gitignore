@@ -89,6 +89,8 @@ application-*.properties
 application-*.yml
 !application.properties
 !application.yml
+!application-prod.properties
+!application-dev.properties
 
 # Logs
 logs/
