@@ -59,6 +59,7 @@ src/main/java/com/siddardha/redisDemonstration/
 │   ├── RoleRepository.java               # Role data access
 │   └── UserRepository.java               # User data access
 ├── Service/
+│   ├── CustomUserDetailsService.java     # Custom user details service
 │   ├── EmployeeService.java              # Employee business logic
 │   ├── RedisLimiterService.java          # Rate limiting service
 │   └── UserService.java                  # User business logic
@@ -66,6 +67,13 @@ src/main/java/com/siddardha/redisDemonstration/
 │   ├── JwtAuthenticationFilter.java     # JWT authentication filter
 │   └── JwtUtil.java                      # JWT token utilities
 └── RedisDemonstrationApplication.java    # Main application class
+
+Root Configuration Files:
+├── .gitignore                            # Git ignore patterns
+├── HELP.md                               # Spring Boot help documentation
+├── mvnw, mvnw.cmd                       # Maven wrapper scripts
+├── pom.xml                               # Maven project configuration
+└── README.md                             # Project documentation
 ```
 
 ## 🛠️ Dependencies
@@ -119,6 +127,23 @@ management.endpoints.web.exposure.include=health,metrics,prometheus,info
 management.metrics.distribution.percentiles-histogram.http.server.requests=true
 management.metrics.distribution.percentiles.http.server.requests=0.5,0.9,0.95,0.99
 ```
+
+### Git Ignore Configuration
+The project includes a comprehensive `.gitignore` file that excludes:
+- **Build artifacts**: Maven/Gradle build directories, compiled classes
+- **IDE files**: IntelliJ IDEA, Eclipse, VS Code, NetBeans configurations
+- **Runtime files**: Logs, database files, Redis dumps
+- **Environment files**: `.env` files and application profiles
+- **System files**: OS-specific files (Windows/Mac)
+- **Temporary files**: Editor backups, temporary files
+
+**Key patterns**:
+- `target/` - Maven build output
+- `.idea/`, `.vscode/` - IDE configurations
+- `*.log` - Log files
+- `application-*.properties` - Environment-specific configs (except main)
+- `.env*` - Environment variables
+- `dump.rdb` - Redis database dumps
 
 ## 📊 API Endpoints
 
