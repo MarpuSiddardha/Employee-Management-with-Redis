@@ -1,0 +1,21 @@
+# Production Environment Configuration Template
+# Copy this to application-prod.properties and fill in actual values
+
+# Database Configuration
+spring.datasource.url=jdbc:postgresql://your-prod-db-host:5432/your-db
+spring.datasource.username=your-prod-username
+spring.datasource.password=your-prod-password
+
+# Redis Configuration
+spring.redis.host=your-prod-redis-host
+spring.redis.port=6379
+spring.redis.password=your-redis-password
+
+# JWT Secret (use a strong, unique secret)
+jwt.secret=your-super-secure-jwt-secret-key-for-production
+
+# Admin Credentials
+admin.username=your-admin-username
+admin.password=your-admin-password
+
+# Other production-specific settings...

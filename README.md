@@ -107,9 +107,9 @@ spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.username=sa
 spring.datasource.password=root
 
-# Admin Credentials (Development)
-admin.username=admin
-admin.password=admin@123
+# Admin Credentials (use environment variables in production)
+admin.username=${ADMIN_USERNAME:admin}
+admin.password=${ADMIN_PASSWORD:admin@123}
 
 # Redis Configuration
 spring.application.name=redis-employee-management
@@ -117,8 +117,8 @@ spring.redis.host=localhost
 spring.redis.port=6379
 spring.redis.database=0
 
-# JWT Secret
-jwt.secret=my-super-secret-key-that-is-long-enough-1234567890!@#
+# JWT Secret (use environment variable in production)
+jwt.secret=${JWT_SECRET:my-super-secret-key-that-is-long-enough-1234567890!@#}
 
 # Actuator Endpoints
 management.endpoints.web.exposure.include=health,metrics,prometheus,info
@@ -328,11 +328,46 @@ curl -X GET http://localhost:8080/api/employees/userId/1 \
 ## 🔧 Configuration Notes
 
 ### Environment Variables
-- `ADMIN_USERNAME`: Override default admin username
-- `ADMIN_PASSWORD`: Override default admin password
-- `SPRING_REDIS_HOST`: Redis server host
-- `SPRING_REDIS_PORT`: Redis server port
-- `JWT_SECRET`: JWT signing secret
+- `JWT_SECRET` - JWT signing secret (required for production)
+- `ADMIN_USERNAME` - Admin username override
+- `ADMIN_PASSWORD` - Admin password override
+- `SPRING_DATASOURCE_URL` - Database URL
+- `SPRING_DATASOURCE_USERNAME` - Database username
+- `SPRING_DATASOURCE_PASSWORD` - Database password
+- `SPRING_REDIS_HOST` - Redis server host
+- `SPRING_REDIS_PASSWORD` - Redis password
+
+### 🔐 Security Notice
+**Never commit sensitive configuration files to version control!**
+
+This project uses environment variables for sensitive data with fallback defaults:
+```properties
+# Example from application.properties
+jwt.secret=${JWT_SECRET:default-secret-for-development-only}
+admin.username=${ADMIN_USERNAME:admin}
+admin.password=${ADMIN_PASSWORD:admin@123}
+```
+
+**Configuration Strategy**:
+- **Development**: Uses default values shown in examples
+- **Production**: Override with environment variables
+- **Template files**: Use `application-*.properties.template` files
+
+**Example Environment Setup**:
+```bash
+export JWT_SECRET="your-super-secure-jwt-secret-key"
+export ADMIN_USERNAME="your-admin-user"
+export ADMIN_PASSWORD="your-secure-password"
+export SPRING_DATASOURCE_URL="jdbc:postgresql://prod-db:5432/employees"
+export SPRING_DATASOURCE_USERNAME="prod-user"
+export SPRING_DATASOURCE_PASSWORD="prod-password"
+```
+
+**Setup Instructions**:
+1. Copy appropriate template: `cp application-prod.properties.template application-prod.properties`
+2. Fill in actual values or use environment variables
+3. Ensure `.gitignore` excludes actual configuration files
+4. Use environment variables or secure vaults for production secrets
 
 ### Production Considerations
 - Use PostgreSQL instead of H2

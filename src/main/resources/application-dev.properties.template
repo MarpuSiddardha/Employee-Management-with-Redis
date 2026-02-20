@@ -1,0 +1,20 @@
+# Development Environment Configuration Template
+# Copy this to application-dev.properties and fill in actual values
+
+# Database Configuration
+spring.datasource.url=jdbc:postgresql://localhost:5432/your-dev-db
+spring.datasource.username=your-dev-username
+spring.datasource.password=your-dev-password
+
+# Redis Configuration
+spring.redis.host=localhost
+spring.redis.port=6379
+
+# JWT Secret (use a strong secret for development)
+jwt.secret=your-development-jwt-secret-key
+
+# Admin Credentials
+admin.username=admin
+admin.password=admin@123
+
+# Other development-specific settings...
