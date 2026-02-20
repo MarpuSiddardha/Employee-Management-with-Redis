@@ -108,17 +108,17 @@ spring.datasource.username=sa
 spring.datasource.password=root
 
 # Admin Credentials (use environment variables in production)
-admin.username=${ADMIN_USERNAME:admin}
-admin.password=${ADMIN_PASSWORD:admin@123}
+admin.username=${ADMIN_USERNAME:adminUsername}
+admin.password=${ADMIN_PASSWORD:adminPassword}
 
 # Redis Configuration
 spring.application.name=redis-employee-management
-spring.redis.host=localhost
+spring.redis.host=RedisHost
 spring.redis.port=6379
 spring.redis.database=0
 
 # JWT Secret (use environment variable in production)
-jwt.secret=${JWT_SECRET:my-super-secret-key-that-is-long-enough-1234567890!@#}
+jwt.secret=${JWT_SECRET:my-secret-key}
 
 # Actuator Endpoints
 management.endpoints.web.exposure.include=health,metrics,prometheus,info
