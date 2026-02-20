@@ -10,6 +10,7 @@ public class EmployeeMapper {
     public static EmployeeResponse mapToResponse(Employee emp) {
         EmployeeResponse response = new EmployeeResponse();
         response.setId(emp.getId());
+        response.setEmployeeId(emp.getEmployeeId());
         response.setName(emp.getName());
         response.setRole(emp.getRole());
         response.setSalary(emp.getSalary());

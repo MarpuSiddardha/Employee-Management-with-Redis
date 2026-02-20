@@ -6,6 +6,9 @@ import lombok.Data;
 @Data
 public class EmployeeRequest {
 
+    @NotNull(message = "employeeId should not be blank or null")
+    private String employeeId;
+
     @NotNull(message = "name should not be blank or null")
     private String name;
 

@@ -2,6 +2,7 @@ package com.siddardha.redisDemonstration.Service;
 
 import com.siddardha.redisDemonstration.DTO.EmployeePartialUpdateRequest;
 import com.siddardha.redisDemonstration.DTO.EmployeeRequest;
+import com.siddardha.redisDemonstration.Exception.EmployeeAlreadyExistsException;
 import com.siddardha.redisDemonstration.Exception.EmployeeNotFoundException;
 import com.siddardha.redisDemonstration.Model.Employee;
 import com.siddardha.redisDemonstration.Repository.EmployeeRepository;
@@ -48,8 +49,12 @@ public class EmployeeService {
 
     @CacheEvict(cacheNames = "employees", allEntries = true)
     public Employee addEmployee(EmployeeRequest employeeRequest) {
+        if(employeeRepository.existsByEmployeeId(employeeRequest.getEmployeeId())) {
+            throw new EmployeeAlreadyExistsException("Employee already exists with employeeId: " + employeeRequest.getEmployeeId());
+        }
 
-       Employee emp = new Employee();
+        Employee emp = new Employee();
+        emp.setEmployeeId(employeeRequest.getEmployeeId());
         emp.setName(employeeRequest.getName());
         emp.setRole(employeeRequest.getRole());
         emp.setSalary(employeeRequest.getSalary());
@@ -58,7 +63,7 @@ public class EmployeeService {
 
     @Cacheable(cacheNames = "employees", key = "'all-employees'")
     public List<Employee> getAllEmployees() {
-        List<Employee> allEmployees =  employeeRepository.findAll();
+        List<Employee> allEmployees = employeeRepository.findAll();
         if(allEmployees.isEmpty()) {
             throw new EmployeeNotFoundException("No Employees Present");
         }

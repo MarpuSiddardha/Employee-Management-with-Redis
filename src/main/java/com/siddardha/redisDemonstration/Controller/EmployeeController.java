@@ -31,7 +31,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/userId/{id}")
-    public ResponseEntity<?> findEmployee(@PathVariable Long id, @RequestHeader("X-User-Id") String userId) {
+    public ResponseEntity<?> findEmployee(@PathVariable Long id, @RequestHeader("X-Users-Id") String userId) {
         if (!redisLimiterService.isAllowed(userId)) {
             Long ttl = redisLimiterService.getRemainingTtl(userId);
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Rate limit exceeded. Please try again after " + ttl + " seconds.");

@@ -14,6 +14,30 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ProblemDetail> handleUserNotFoundException(UserNotFoundException ex, HttpServletRequest req) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        pd.setTitle("User Not Found");
+        pd.setProperty("Path", req.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ProblemDetail> handleUserAlreadyExistsException(UserAlreadyExistsException ex, HttpServletRequest req) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        pd.setTitle("User Already Exists");
+        pd.setProperty("Path", req.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(pd);
+    }
+
+    @ExceptionHandler(EmployeeAlreadyExistsException.class)
+    public ResponseEntity<ProblemDetail> handleEmployeeAlreadyExistsException(EmployeeAlreadyExistsException ex, HttpServletRequest req) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        pd.setTitle("Employee Already Exists");
+        pd.setProperty("Path", req.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(pd);
+    }
+
     @ExceptionHandler(EmployeeNotFoundException.class)
     public ResponseEntity<ProblemDetail> handleEmployeeNotFoundException(EmployeeNotFoundException ex, HttpServletRequest req) {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
@@ -21,6 +45,7 @@ public class GlobalExceptionHandler {
         pd.setProperty("Path",  req.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pd);
     }
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ProblemDetail> handleBadRequests(IllegalArgumentException ex, HttpServletRequest req) {
