@@ -4,17 +4,15 @@ WORKDIR /app
 
 # Copy pom.xml first for better Docker layer caching
 COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw* ./
 
 # Download dependencies
-RUN ./mvnw dependency:go-offline -B
+RUN mvn dependency:go-offline -B
 
 # Copy source code
 COPY src ./src
 
 # Build the application
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # -------- RUNTIME STAGE --------
 FROM eclipse-temurin:17-jre-alpine
