@@ -1,5 +1,5 @@
 # -------- BUILD STAGE --------
-FROM maven:3.8-openjdk-17-slim AS build
+FROM maven:3.8-eclipse-temurin-17-alpine AS build
 WORKDIR /app
 
 # Copy pom.xml first for better Docker layer caching
@@ -17,7 +17,7 @@ COPY src ./src
 RUN ./mvnw clean package -DskipTests
 
 # -------- RUNTIME STAGE --------
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jre-alpine
 
 
 WORKDIR /app
